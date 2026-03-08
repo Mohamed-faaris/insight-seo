@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
+import { useTheme } from "@/hooks/useTheme";
 import { ScoreGauge } from "@/components/seo/ScoreGauge";
 import { MetaSummary } from "@/components/seo/MetaSummary";
 import { OpenGraphPreview } from "@/components/seo/OpenGraphPreview";
@@ -15,12 +16,14 @@ import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
+import { ManifestCard } from "@/components/seo/ManifestCard";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2, Search } from "lucide-react";
+import { ArrowLeft, Loader2, Search, Sun, Moon } from "lucide-react";
 
 const SharedReport = () => {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
+  const { theme, toggle: toggleTheme } = useTheme();
   const { report, error, loadFromShareToken } = useSeoAnalysis();
 
   useEffect(() => {
@@ -47,7 +50,7 @@ const SharedReport = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background dark">
+    <div className="min-h-screen bg-background">
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -56,10 +59,15 @@ const SharedReport = () => {
               <span className="text-primary">SEO</span>Audit
             </h1>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            New Scan
-          </Button>
+          <div className="flex gap-1">
+            <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              New Scan
+            </Button>
+            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground" onClick={toggleTheme}>
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -92,6 +100,7 @@ const SharedReport = () => {
           <KeywordDensityCard content={report.content} />
           <TechnicalCard technical={report.technical} security={report.security} structuredData={report.structuredData} />
           <PerformanceCard performance={report.performance} />
+          {report.manifest && <ManifestCard manifest={report.manifest} siteUrl={report.finalUrl} />}
           <ExternalToolsCard url={report.finalUrl} />
         </div>
       </div>

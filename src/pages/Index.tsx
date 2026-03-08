@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
+import { useTheme } from "@/hooks/useTheme";
 import { UrlInput } from "@/components/seo/UrlInput";
 import { ScoreGauge } from "@/components/seo/ScoreGauge";
 import { MetaSummary } from "@/components/seo/MetaSummary";
@@ -16,14 +17,16 @@ import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
+import { ManifestCard } from "@/components/seo/ManifestCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
-import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
+import { Download, Share2, History, Search, Loader2, Swords, Sun, Moon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Index = () => {
   const { isAnalyzing, report, shareToken, error, analyze } = useSeoAnalysis();
+  const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleShare = () => {
@@ -43,7 +46,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background dark">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-xl sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -61,6 +64,9 @@ const Index = () => {
             <Button variant="ghost" size="sm" onClick={() => navigate("/history")} className="text-muted-foreground hover:text-foreground">
               <History className="h-4 w-4 mr-2" />
               History
+            </Button>
+            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground" onClick={toggleTheme}>
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
           </div>
         </div>
@@ -175,6 +181,7 @@ const Index = () => {
               structuredData={report.structuredData}
             />
             <PerformanceCard performance={report.performance} />
+            {report.manifest && <ManifestCard manifest={report.manifest} siteUrl={report.finalUrl} />}
             <ExternalToolsCard url={report.finalUrl} />
           </div>
         </motion.div>

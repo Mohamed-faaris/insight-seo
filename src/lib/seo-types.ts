@@ -16,6 +16,7 @@ export interface SeoReport {
   security: SecurityAnalysis;
   performance: PerformanceData | null;
   favicon: FaviconData;
+  manifest: ManifestData | null;
   issues: SeoIssue[];
 }
 
@@ -161,6 +162,19 @@ export interface FaviconData {
   type: string;
   sizes: string;
   appleTouchIcon: string;
+  issues: SeoIssue[];
+}
+
+export interface ManifestData {
+  found: boolean;
+  url: string;
+  name: string;
+  shortName: string;
+  startUrl: string;
+  display: string;
+  themeColor: string;
+  backgroundColor: string;
+  icons: { src: string; sizes: string; type: string }[];
   issues: SeoIssue[];
 }
 

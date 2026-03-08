@@ -333,6 +333,63 @@ serve(async (req) => {
       issues: favIssues,
     };
 
+    // --- Manifest.json ---
+    let manifest: any = null;
+    const manifestEl = doc.querySelector('link[rel="manifest"]');
+    const manifestHref = manifestEl?.getAttribute("href") || "";
+    const manifestIssues: any[] = [];
+
+    if (manifestHref) {
+      try {
+        const manifestUrl = new URL(manifestHref, baseUrl).toString();
+        const mRes = await fetch(manifestUrl);
+        if (mRes.ok) {
+          const mData = await mRes.json();
+          const icons = (mData.icons || []).map((i: any) => ({
+            src: i.src || "", sizes: i.sizes || "", type: i.type || "",
+          }));
+
+          manifest = {
+            found: true,
+            url: manifestUrl,
+            name: mData.name || "",
+            shortName: mData.short_name || "",
+            startUrl: mData.start_url || "",
+            display: mData.display || "",
+            themeColor: mData.theme_color || "",
+            backgroundColor: mData.background_color || "",
+            icons,
+            issues: [],
+          };
+
+          if (!mData.name) manifestIssues.push({ severity: "warning", category: "Manifest", message: "Missing manifest name" });
+          else manifestIssues.push({ severity: "pass", category: "Manifest", message: "Manifest name found" });
+          if (!mData.short_name) manifestIssues.push({ severity: "info", category: "Manifest", message: "Missing manifest short_name" });
+          if (!mData.start_url) manifestIssues.push({ severity: "warning", category: "Manifest", message: "Missing manifest start_url" });
+          if (!icons.length) manifestIssues.push({ severity: "warning", category: "Manifest", message: "No icons defined in manifest" });
+          else manifestIssues.push({ severity: "pass", category: "Manifest", message: `${icons.length} icon(s) found in manifest` });
+          if (!mData.display) manifestIssues.push({ severity: "info", category: "Manifest", message: "No display mode set" });
+          if (!mData.theme_color) manifestIssues.push({ severity: "info", category: "Manifest", message: "No theme_color set" });
+
+          manifest.issues = manifestIssues;
+        } else {
+          manifest = { found: false, url: manifestUrl, name: "", shortName: "", startUrl: "", display: "", themeColor: "", backgroundColor: "", icons: [], issues: [{ severity: "warning", category: "Manifest", message: "manifest.json returned non-OK status" }] };
+        }
+      } catch {
+        manifest = { found: false, url: manifestHref, name: "", shortName: "", startUrl: "", display: "", themeColor: "", backgroundColor: "", icons: [], issues: [{ severity: "warning", category: "Manifest", message: "Failed to fetch manifest.json" }] };
+      }
+    } else {
+      // Try /manifest.json fallback
+      try {
+        const mRes = await fetch(new URL("/manifest.json", baseUrl).toString());
+        if (mRes.ok) {
+          const mData = await mRes.json();
+          const icons = (mData.icons || []).map((i: any) => ({ src: i.src || "", sizes: i.sizes || "", type: i.type || "" }));
+          manifest = { found: true, url: new URL("/manifest.json", baseUrl).toString(), name: mData.name || "", shortName: mData.short_name || "", startUrl: mData.start_url || "", display: mData.display || "", themeColor: mData.theme_color || "", backgroundColor: mData.background_color || "", icons, issues: [{ severity: "pass", category: "Manifest", message: "manifest.json found at default path" }] };
+        }
+      } catch { /* skip */ }
+    }
+
     // --- Performance (PageSpeed) ---
     let performance = null;
     const pageSpeedKey = Deno.env.get("GOOGLE_PAGESPEED_API_KEY");
@@ -356,10 +413,11 @@ serve(async (req) => {
     }
 
     // --- Calculate SEO Score ---
+    const manifestIssuesForScore = manifest?.issues || [];
     const allIssues = [
       ...metaIssues, ...ogIssues, ...twIssues, ...headingIssues,
       ...imageIssues, ...linkIssues, ...sdIssues, ...contentIssues,
-      ...techIssues, ...secIssues, ...favIssues,
+      ...techIssues, ...secIssues, ...favIssues, ...manifestIssuesForScore,
     ];
 
     let score = 100;
@@ -387,6 +445,7 @@ serve(async (req) => {
       security,
       performance,
       favicon,
+      manifest,
       issues: allIssues,
     };
 
