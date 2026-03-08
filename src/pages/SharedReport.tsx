@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
+import { useTheme } from "@/hooks/useTheme";
 import { ScoreGauge } from "@/components/seo/ScoreGauge";
 import { MetaSummary } from "@/components/seo/MetaSummary";
 import { OpenGraphPreview } from "@/components/seo/OpenGraphPreview";
@@ -15,8 +16,9 @@ import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
+import { ManifestCard } from "@/components/seo/ManifestCard";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2, Search } from "lucide-react";
+import { ArrowLeft, Loader2, Search, Sun, Moon } from "lucide-react";
 
 const SharedReport = () => {
   const { token } = useParams<{ token: string }>();
