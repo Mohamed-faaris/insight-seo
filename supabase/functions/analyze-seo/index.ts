@@ -558,6 +558,7 @@ serve(async (req) => {
       ...metaIssues, ...ogIssues, ...twIssues, ...headingIssues,
       ...imageIssues, ...linkIssues, ...sdIssues, ...contentIssues,
       ...techIssues, ...secIssues, ...favIssues, ...manifestIssuesForScore,
+      ...a11yIssues,
     ];
 
     let score = 100;
