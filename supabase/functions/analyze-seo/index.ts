@@ -386,6 +386,7 @@ serve(async (req) => {
       technical,
       security,
       performance,
+      favicon,
       issues: allIssues,
     };
 
