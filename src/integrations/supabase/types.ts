@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      seo_scans: {
+        Row: {
+          created_at: string
+          final_url: string | null
+          id: string
+          report: Json | null
+          seo_score: number | null
+          share_token: string | null
+          status: string
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          final_url?: string | null
+          id?: string
+          report?: Json | null
+          seo_score?: number | null
+          share_token?: string | null
+          status?: string
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          final_url?: string | null
+          id?: string
+          report?: Json | null
+          seo_score?: number | null
+          share_token?: string | null
+          status?: string
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
