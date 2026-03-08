@@ -84,8 +84,7 @@ const SharedReport = () => {
           <PageInfoCard info={report.pageInfo} />
           <MetaSummary meta={report.metaTags} />
           {report.favicon && <FaviconCard favicon={report.favicon} siteUrl={report.finalUrl} />}
-          <OpenGraphPreview og={report.openGraph} />
-          <TwitterCardPreview twitter={report.twitterCard} />
+          <OpenGraphPreview og={report.openGraph} twitter={report.twitterCard} />
           <HeadingChart headings={report.headings} />
           <LinkStats links={report.links} />
           <ImageAnalysisCard images={report.images} />
