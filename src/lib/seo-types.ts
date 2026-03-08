@@ -17,6 +17,39 @@ export interface SeoReport {
   performance: PerformanceData | null;
   favicon: FaviconData;
   manifest: ManifestData | null;
+  accessibility?: AccessibilityAnalysis;
+  issues: SeoIssue[];
+}
+
+export interface AccessibilityAnalysis {
+  score: number;
+  landmarks: {
+    header: number;
+    nav: number;
+    main: number;
+    footer: number;
+    aside: number;
+  };
+  semanticElements: {
+    article: number;
+    section: number;
+    figure: number;
+    figcaption: number;
+    time: number;
+    details: number;
+  };
+  formInputs: {
+    total: number;
+    withLabels: number;
+    withoutLabels: number;
+    unlabeled: string[];
+  };
+  ariaUsage: number;
+  buttonsWithoutText: number;
+  emptyLinks: number;
+  lang: string;
+  hasSkipNav: boolean;
+  positiveTabindex: number;
   issues: SeoIssue[];
 }
 

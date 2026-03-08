@@ -18,6 +18,7 @@ import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
 import { ManifestCard } from "@/components/seo/ManifestCard";
+import { AccessibilityCard } from "@/components/seo/AccessibilityCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, History, Search, Loader2, Swords, Sun, Moon } from "lucide-react";
@@ -182,6 +183,7 @@ const Index = () => {
             />
             <PerformanceCard performance={report.performance} />
             {report.manifest && <ManifestCard manifest={report.manifest} siteUrl={report.finalUrl} />}
+            {report.accessibility && <AccessibilityCard accessibility={report.accessibility} />}
             <ExternalToolsCard url={report.finalUrl} />
           </div>
         </motion.div>

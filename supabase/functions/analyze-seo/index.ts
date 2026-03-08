@@ -390,6 +390,146 @@ serve(async (req) => {
       } catch { /* skip */ }
     }
 
+    // --- Accessibility Analysis ---
+    const a11yIssues: any[] = [];
+
+    // Check for skip navigation link
+    const firstLink = doc.querySelector("a");
+    const hasSkipNav = firstLink && (firstLink.getAttribute("href") || "").includes("#") && /skip/i.test(firstLink.textContent || "");
+
+    // ARIA landmarks
+    const landmarks = {
+      header: doc.querySelectorAll("header, [role='banner']").length,
+      nav: doc.querySelectorAll("nav, [role='navigation']").length,
+      main: doc.querySelectorAll("main, [role='main']").length,
+      footer: doc.querySelectorAll("footer, [role='contentinfo']").length,
+      aside: doc.querySelectorAll("aside, [role='complementary']").length,
+    };
+
+    if (landmarks.main === 0) a11yIssues.push({ severity: "critical", category: "Accessibility", message: "Missing <main> landmark" });
+    else a11yIssues.push({ severity: "pass", category: "Accessibility", message: "<main> landmark found" });
+    if (landmarks.nav === 0) a11yIssues.push({ severity: "warning", category: "Accessibility", message: "Missing <nav> landmark" });
+    else a11yIssues.push({ severity: "pass", category: "Accessibility", message: "<nav> landmark found" });
+    if (landmarks.header === 0) a11yIssues.push({ severity: "info", category: "Accessibility", message: "Missing <header> landmark" });
+    if (landmarks.footer === 0) a11yIssues.push({ severity: "info", category: "Accessibility", message: "Missing <footer> landmark" });
+
+    // Semantic HTML elements
+    const semanticElements = {
+      article: doc.querySelectorAll("article").length,
+      section: doc.querySelectorAll("section").length,
+      figure: doc.querySelectorAll("figure").length,
+      figcaption: doc.querySelectorAll("figcaption").length,
+      time: doc.querySelectorAll("time").length,
+      details: doc.querySelectorAll("details").length,
+    };
+
+    const semanticCount = Object.values(semanticElements).reduce((a, b) => a + b, 0);
+    if (semanticCount === 0) a11yIssues.push({ severity: "warning", category: "Accessibility", message: "No semantic HTML elements found (article, section, figure, time, details)" });
+    else a11yIssues.push({ severity: "pass", category: "Accessibility", message: `${semanticCount} semantic HTML element(s) found` });
+
+    // Form labels
+    const formInputs = Array.from(doc.querySelectorAll("input:not([type='hidden']):not([type='submit']):not([type='button']), select, textarea"));
+    let inputsWithLabel = 0;
+    let inputsWithoutLabel = 0;
+    const unlabeledInputs: string[] = [];
+
+    for (const input of formInputs) {
+      const id = (input as any).getAttribute("id") || "";
+      const ariaLabel = (input as any).getAttribute("aria-label") || "";
+      const ariaLabelledBy = (input as any).getAttribute("aria-labelledby") || "";
+      const title = (input as any).getAttribute("title") || "";
+      const placeholder = (input as any).getAttribute("placeholder") || "";
+      const hasLabelEl = id ? doc.querySelector(`label[for="${id}"]`) : null;
+
+      if (hasLabelEl || ariaLabel || ariaLabelledBy || title) {
+        inputsWithLabel++;
+      } else {
+        inputsWithoutLabel++;
+        const type = (input as any).getAttribute("type") || (input as any).tagName?.toLowerCase() || "input";
+        const name = (input as any).getAttribute("name") || placeholder || "unnamed";
+        unlabeledInputs.push(`${type}: ${name}`);
+      }
+    }
+
+    if (formInputs.length > 0) {
+      if (inputsWithoutLabel > 0) a11yIssues.push({ severity: "warning", category: "Accessibility", message: `${inputsWithoutLabel} form input(s) missing labels`, details: unlabeledInputs.slice(0, 10).join(", ") });
+      else a11yIssues.push({ severity: "pass", category: "Accessibility", message: "All form inputs have labels" });
+    }
+
+    // ARIA attributes usage
+    const ariaElements = doc.querySelectorAll("[aria-label], [aria-labelledby], [aria-describedby], [aria-hidden], [aria-live], [aria-expanded], [aria-controls], [role]");
+    const ariaCount = ariaElements.length;
+
+    // Buttons without accessible text
+    const buttons = Array.from(doc.querySelectorAll("button, [role='button'], input[type='button'], input[type='submit']"));
+    let buttonsWithoutText = 0;
+    for (const btn of buttons) {
+      const text = (btn as any).textContent?.trim() || "";
+      const ariaLabel = (btn as any).getAttribute("aria-label") || "";
+      const ariaLabelledBy = (btn as any).getAttribute("aria-labelledby") || "";
+      const title = (btn as any).getAttribute("title") || "";
+      const value = (btn as any).getAttribute("value") || "";
+      if (!text && !ariaLabel && !ariaLabelledBy && !title && !value) buttonsWithoutText++;
+    }
+
+    if (buttonsWithoutText > 0) a11yIssues.push({ severity: "warning", category: "Accessibility", message: `${buttonsWithoutText} button(s) without accessible text` });
+    else if (buttons.length > 0) a11yIssues.push({ severity: "pass", category: "Accessibility", message: "All buttons have accessible text" });
+
+    // Links without text
+    let emptyLinks = 0;
+    for (const link of linkElements) {
+      const text = (link as any).textContent?.trim() || "";
+      const ariaLabel = (link as any).getAttribute("aria-label") || "";
+      const title = (link as any).getAttribute("title") || "";
+      const img = (link as any).querySelector("img");
+      const imgAlt = img?.getAttribute("alt") || "";
+      if (!text && !ariaLabel && !title && !imgAlt) emptyLinks++;
+    }
+
+    if (emptyLinks > 0) a11yIssues.push({ severity: "warning", category: "Accessibility", message: `${emptyLinks} link(s) without accessible text` });
+    else if (linkElements.length > 0) a11yIssues.push({ severity: "pass", category: "Accessibility", message: "All links have accessible text" });
+
+    // Language attribute
+    const htmlEl = doc.querySelector("html");
+    const lang = htmlEl?.getAttribute("lang") || "";
+    if (!lang) a11yIssues.push({ severity: "warning", category: "Accessibility", message: "Missing lang attribute on <html>" });
+    else a11yIssues.push({ severity: "pass", category: "Accessibility", message: `Language attribute set: ${lang}` });
+
+    // Skip nav
+    if (!hasSkipNav) a11yIssues.push({ severity: "info", category: "Accessibility", message: "No skip navigation link found" });
+    else a11yIssues.push({ severity: "pass", category: "Accessibility", message: "Skip navigation link found" });
+
+    // Tabindex > 0 (anti-pattern)
+    const positiveTabindex = doc.querySelectorAll("[tabindex]");
+    let badTabindex = 0;
+    for (const el of Array.from(positiveTabindex)) {
+      const val = parseInt((el as any).getAttribute("tabindex") || "0", 10);
+      if (val > 0) badTabindex++;
+    }
+    if (badTabindex > 0) a11yIssues.push({ severity: "warning", category: "Accessibility", message: `${badTabindex} element(s) with positive tabindex (anti-pattern)` });
+
+    // Calculate a11y score
+    let a11yScore = 100;
+    for (const issue of a11yIssues) {
+      if (issue.severity === "critical") a11yScore -= 15;
+      else if (issue.severity === "warning") a11yScore -= 5;
+    }
+    a11yScore = Math.max(0, Math.min(100, a11yScore));
+
+    const accessibility = {
+      score: a11yScore,
+      landmarks,
+      semanticElements,
+      formInputs: { total: formInputs.length, withLabels: inputsWithLabel, withoutLabels: inputsWithoutLabel, unlabeled: unlabeledInputs.slice(0, 10) },
+      ariaUsage: ariaCount,
+      buttonsWithoutText,
+      emptyLinks,
+      lang,
+      hasSkipNav: !!hasSkipNav,
+      positiveTabindex: badTabindex,
+      issues: a11yIssues,
+    };
+
     // --- Performance (PageSpeed) ---
     let performance = null;
     const pageSpeedKey = Deno.env.get("GOOGLE_PAGESPEED_API_KEY");
@@ -418,6 +558,7 @@ serve(async (req) => {
       ...metaIssues, ...ogIssues, ...twIssues, ...headingIssues,
       ...imageIssues, ...linkIssues, ...sdIssues, ...contentIssues,
       ...techIssues, ...secIssues, ...favIssues, ...manifestIssuesForScore,
+      ...a11yIssues,
     ];
 
     let score = 100;
@@ -446,6 +587,7 @@ serve(async (req) => {
       performance,
       favicon,
       manifest,
+      accessibility,
       issues: allIssues,
     };
 
