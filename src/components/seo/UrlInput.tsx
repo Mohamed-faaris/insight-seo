@@ -7,10 +7,11 @@ import { motion } from "framer-motion";
 interface UrlInputProps {
   onAnalyze: (url: string) => void;
   isLoading: boolean;
+  defaultUrl?: string;
 }
 
-export function UrlInput({ onAnalyze, isLoading }: UrlInputProps) {
-  const [url, setUrl] = useState("");
+export function UrlInput({ onAnalyze, isLoading, defaultUrl = "" }: UrlInputProps) {
+  const [url, setUrl] = useState(defaultUrl);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
