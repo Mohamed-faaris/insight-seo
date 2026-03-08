@@ -44,9 +44,13 @@ export interface OpenGraphData {
   title: string;
   description: string;
   image: string;
+  imageWidth: string;
+  imageHeight: string;
+  imageAlt: string;
   url: string;
   siteName: string;
   type: string;
+  locale: string;
   issues: SeoIssue[];
 }
 
