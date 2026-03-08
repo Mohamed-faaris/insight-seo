@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
 import type { ScanRecord } from "@/lib/seo-types";
