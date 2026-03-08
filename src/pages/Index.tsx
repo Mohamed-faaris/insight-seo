@@ -15,6 +15,7 @@ import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
+import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
