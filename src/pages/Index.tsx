@@ -159,7 +159,7 @@ const Index = () => {
           {/* Report Header */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
             <div className="flex-1 min-w-0">
-              <UrlInput onAnalyze={analyze} isLoading={isAnalyzing} />
+              <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} />
               <p className="text-xs text-muted-foreground mt-2">
                 Final URL: {report.finalUrl} · Scanned {new Date(report.scanDate).toLocaleString()}
               </p>
