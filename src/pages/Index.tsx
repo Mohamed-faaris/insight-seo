@@ -14,6 +14,8 @@ import { ImageAnalysisCard } from "@/components/seo/ImageAnalysisCard";
 import { ContentCard } from "@/components/seo/ContentCard";
 import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
+import { FaviconCard } from "@/components/seo/FaviconCard";
+import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
