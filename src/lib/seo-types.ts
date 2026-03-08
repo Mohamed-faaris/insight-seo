@@ -155,6 +155,15 @@ export interface SeoIssue {
   details?: string;
 }
 
+export interface FaviconData {
+  found: boolean;
+  url: string;
+  type: string;
+  sizes: string;
+  appleTouchIcon: string;
+  issues: SeoIssue[];
+}
+
 export interface ScanRecord {
   id: string;
   url: string;
