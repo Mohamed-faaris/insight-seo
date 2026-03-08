@@ -587,6 +587,7 @@ serve(async (req) => {
       performance,
       favicon,
       manifest,
+      accessibility,
       issues: allIssues,
     };
 
