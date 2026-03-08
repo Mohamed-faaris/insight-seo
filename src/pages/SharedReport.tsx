@@ -83,7 +83,7 @@ const SharedReport = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           <PageInfoCard info={report.pageInfo} />
           <MetaSummary meta={report.metaTags} />
-          <FaviconCard favicon={report.favicon} siteUrl={report.finalUrl} />
+          {report.favicon && <FaviconCard favicon={report.favicon} siteUrl={report.finalUrl} />}
           <OpenGraphPreview og={report.openGraph} />
           <TwitterCardPreview twitter={report.twitterCard} />
           <HeadingChart headings={report.headings} />
