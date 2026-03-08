@@ -9,9 +9,17 @@ interface OpenGraphPreviewProps {
   siteUrl?: string;
 }
 
-export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
-  const hasOgData = og.title || og.description || og.image;
-  const hasTwitterData = twitter && (twitter.title || twitter.description || twitter.image);
+export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps) {
+  const resolvedOgImage = resolveAssetUrl(og.image, siteUrl || og.url);
+
+  // Derive preview data (Twitter falls back to OG)
+  const twTitle = twitter?.title || og.title;
+  const twDesc = twitter?.description || og.description;
+  const twImage = twitter?.image || og.image;
+  const resolvedTwImage = resolveAssetUrl(twImage, siteUrl || og.url);
+
+  const hasOgData = og.title || og.description || resolvedOgImage;
+  const hasTwitterData = twitter && (twitter.title || twitter.description || resolvedTwImage);
   const hasAnyData = hasOgData || hasTwitterData;
 
   const ogProperties = [
@@ -26,11 +34,6 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
     { key: "og:image:height", value: og.imageHeight },
     { key: "og:image:alt", value: og.imageAlt },
   ];
-
-  // Derive preview data (Twitter falls back to OG)
-  const twTitle = twitter?.title || og.title;
-  const twDesc = twitter?.description || og.description;
-  const twImage = twitter?.image || og.image;
 
   return (
     <Card className="glass-card xl:col-span-2">
