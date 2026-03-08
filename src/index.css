@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,108 +6,108 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 25% 10%;
+    --background: 220 23% 95%;
+    --foreground: 234 16% 35%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card-foreground: 234 16% 35%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover: 228 11% 82%;
+    --popover-foreground: 234 16% 35%;
 
-    --primary: 199 89% 48%;
+    --primary: 267 83% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 14% 92%;
-    --secondary-foreground: 220 25% 10%;
+    --secondary: 228 11% 82%;
+    --secondary-foreground: 234 16% 35%;
 
-    --muted: 220 14% 92%;
-    --muted-foreground: 220 10% 46%;
+    --muted: 220 16% 90%;
+    --muted-foreground: 233 10% 47%;
 
-    --accent: 199 89% 48%;
+    --accent: 197 97% 46%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 347 87% 44%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 87%;
-    --input: 220 13% 87%;
-    --ring: 199 89% 48%;
-    --radius: 0.75rem;
+    --border: 228 11% 76%;
+    --input: 228 11% 82%;
+    --ring: 267 83% 58%;
+    --radius: 0.35rem;
 
-    --success: 152 69% 41%;
+    --success: 115 56% 40%;
     --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
+    --warning: 22 98% 52%;
     --warning-foreground: 0 0% 100%;
-    --info: 199 89% 48%;
+    --info: 197 97% 46%;
     --info-foreground: 0 0% 100%;
 
-    --chart-1: 199 89% 48%;
-    --chart-2: 152 69% 41%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 0 72% 51%;
-    --chart-5: 262 83% 58%;
+    --chart-1: 267 83% 58%;
+    --chart-2: 197 97% 46%;
+    --chart-3: 115 56% 40%;
+    --chart-4: 22 98% 52%;
+    --chart-5: 10 52% 67%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 227 17% 88%;
+    --sidebar-foreground: 234 16% 35%;
+    --sidebar-primary: 267 83% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 197 97% 46%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 228 11% 76%;
+    --sidebar-ring: 267 83% 58%;
   }
 
   .dark {
-    --background: 222 47% 6%;
-    --foreground: 210 40% 96%;
+    --background: 240 21% 12%;
+    --foreground: 226 64% 88%;
 
-    --card: 222 44% 8%;
-    --card-foreground: 210 40% 96%;
+    --card: 240 21% 15%;
+    --card-foreground: 226 64% 88%;
 
-    --popover: 222 44% 8%;
-    --popover-foreground: 210 40% 96%;
+    --popover: 234 13% 31%;
+    --popover-foreground: 226 64% 88%;
 
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 267 84% 81%;
+    --primary-foreground: 240 21% 15%;
 
-    --secondary: 222 30% 14%;
-    --secondary-foreground: 210 40% 96%;
+    --secondary: 237 12% 39%;
+    --secondary-foreground: 226 64% 88%;
 
-    --muted: 222 30% 14%;
-    --muted-foreground: 215 20% 55%;
+    --muted: 234 19% 20%;
+    --muted-foreground: 226 24% 72%;
 
-    --accent: 199 89% 48%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 189 71% 73%;
+    --accent-foreground: 240 21% 15%;
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 351 74% 73%;
+    --destructive-foreground: 240 21% 15%;
 
-    --border: 222 30% 16%;
-    --input: 222 30% 16%;
-    --ring: 199 89% 48%;
+    --border: 240 12% 23%;
+    --input: 240 12% 23%;
+    --ring: 267 84% 81%;
 
-    --success: 152 69% 41%;
-    --success-foreground: 0 0% 100%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --info: 199 89% 48%;
-    --info-foreground: 0 0% 100%;
+    --success: 115 47% 70%;
+    --success-foreground: 240 21% 15%;
+    --warning: 24 70% 75%;
+    --warning-foreground: 240 21% 15%;
+    --info: 189 71% 73%;
+    --info-foreground: 240 21% 15%;
 
-    --chart-1: 199 89% 48%;
-    --chart-2: 152 69% 41%;
-    --chart-3: 38 92% 50%;
-    --chart-4: 0 72% 51%;
-    --chart-5: 262 83% 58%;
+    --chart-1: 267 84% 81%;
+    --chart-2: 189 71% 73%;
+    --chart-3: 115 47% 70%;
+    --chart-4: 24 70% 75%;
+    --chart-5: 10 56% 91%;
 
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 210 40% 96%;
-    --sidebar-primary: 199 89% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 30% 14%;
-    --sidebar-accent-foreground: 210 40% 96%;
-    --sidebar-border: 222 30% 16%;
-    --sidebar-ring: 199 89% 48%;
+    --sidebar-background: 240 23% 9%;
+    --sidebar-foreground: 226 64% 88%;
+    --sidebar-primary: 267 84% 81%;
+    --sidebar-primary-foreground: 240 21% 15%;
+    --sidebar-accent: 189 71% 73%;
+    --sidebar-accent-foreground: 240 21% 15%;
+    --sidebar-border: 234 13% 31%;
+    --sidebar-ring: 267 84% 81%;
   }
 }
 
@@ -117,28 +117,28 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Montserrat', system-ui, sans-serif;
   }
 }
 
 @layer utilities {
   .font-mono {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Fira Code', monospace;
   }
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(199 89% 48%), hsl(262 83% 58%));
+    background: linear-gradient(135deg, hsl(267 83% 58%), hsl(197 97% 46%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .gradient-score-good {
-    background: linear-gradient(135deg, hsl(152 69% 41%), hsl(152 69% 31%));
+    background: linear-gradient(135deg, hsl(115 56% 40%), hsl(115 56% 30%));
   }
   .gradient-score-ok {
-    background: linear-gradient(135deg, hsl(38 92% 50%), hsl(38 82% 40%));
+    background: linear-gradient(135deg, hsl(22 98% 52%), hsl(22 88% 42%));
   }
   .gradient-score-bad {
-    background: linear-gradient(135deg, hsl(0 72% 51%), hsl(0 72% 41%));
+    background: linear-gradient(135deg, hsl(347 87% 44%), hsl(347 87% 34%));
   }
   .glass-card {
     @apply bg-card/80 backdrop-blur-xl border border-border/50;
