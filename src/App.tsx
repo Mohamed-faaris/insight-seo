@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import History from "./pages/History";
 import SharedReport from "./pages/SharedReport";
+import Compare from "./pages/Compare";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App = () => (
         <div className="dark">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/compare" element={<Compare />} />
             <Route path="/history" element={<History />} />
             <Route path="/report/:token" element={<SharedReport />} />
             <Route path="*" element={<NotFound />} />
