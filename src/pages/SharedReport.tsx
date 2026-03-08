@@ -13,6 +13,7 @@ import { ContentCard } from "@/components/seo/ContentCard";
 import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
+import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Search } from "lucide-react";
 
