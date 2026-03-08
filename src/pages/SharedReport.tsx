@@ -68,6 +68,7 @@ const SharedReport = () => {
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
           </div>
+        </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
