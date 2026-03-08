@@ -49,7 +49,7 @@ export function GooglePreviewCard({ url, title, description, favicon, siteUrl }:
               <p className="text-[10px] text-muted-foreground truncate">{displayUrl}</p>
             </div>
           </div>
-          <p className="text-sm font-medium text-[hsl(210_100%_56%)] line-clamp-2 hover:underline cursor-pointer pt-1">
+          <p className="text-sm font-medium text-accent line-clamp-2 hover:underline cursor-pointer pt-1">
             {title || "No title found"}
           </p>
           <p className="text-xs text-muted-foreground line-clamp-2">
