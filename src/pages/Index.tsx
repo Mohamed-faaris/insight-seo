@@ -183,6 +183,7 @@ const Index = () => {
             />
             <PerformanceCard performance={report.performance} />
             {report.manifest && <ManifestCard manifest={report.manifest} siteUrl={report.finalUrl} />}
+            {report.accessibility && <AccessibilityCard accessibility={report.accessibility} />}
             <ExternalToolsCard url={report.finalUrl} />
           </div>
         </motion.div>
