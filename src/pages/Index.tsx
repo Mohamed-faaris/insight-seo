@@ -16,7 +16,7 @@ import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
-import { Download, Share2, History, Search, Loader2 } from "lucide-react";
+import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -51,10 +51,16 @@ const Index = () => {
               <span className="text-primary">SEO</span>Audit
             </h1>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/history")} className="text-muted-foreground hover:text-foreground">
-            <History className="h-4 w-4 mr-2" />
-            History
-          </Button>
+          <div className="flex gap-1">
+            <Button variant="ghost" size="sm" onClick={() => navigate("/compare")} className="text-muted-foreground hover:text-foreground">
+              <Swords className="h-4 w-4 mr-2" />
+              Compare
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate("/history")} className="text-muted-foreground hover:text-foreground">
+              <History className="h-4 w-4 mr-2" />
+              History
+            </Button>
+          </div>
         </div>
       </header>
 
