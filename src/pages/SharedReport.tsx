@@ -4,7 +4,6 @@ import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
 import { ScoreGauge } from "@/components/seo/ScoreGauge";
 import { MetaSummary } from "@/components/seo/MetaSummary";
 import { OpenGraphPreview } from "@/components/seo/OpenGraphPreview";
-import { TwitterCardPreview } from "@/components/seo/TwitterCardPreview";
 import { HeadingChart } from "@/components/seo/HeadingChart";
 import { LinkStats } from "@/components/seo/LinkStats";
 import { IssuesList } from "@/components/seo/IssuesList";
