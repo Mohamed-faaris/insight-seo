@@ -57,38 +57,30 @@ const tools = [
 export function ExternalToolsCard({ url }: ExternalToolsCardProps) {
   return (
     <Card className="glass-card">
-      <Accordion type="single" collapsible>
-        <AccordionItem value="tools" className="border-none">
-          <CardHeader className="pb-0">
-            <AccordionTrigger className="hover:no-underline py-0">
-              <CardTitle className="flex items-center gap-2 text-base">
-                <ExternalLink className="h-4 w-4 text-primary" />
-                External SEO Tools
-              </CardTitle>
-            </AccordionTrigger>
-          </CardHeader>
-          <AccordionContent>
-            <CardContent className="pt-4">
-              <div className="grid grid-cols-2 gap-2">
-                {tools.map((tool) => (
-                  <a
-                    key={tool.name}
-                    href={tool.getUrl(url)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 p-2.5 rounded-lg bg-secondary/30 hover:bg-secondary/60 border border-border/30 hover:border-border transition-colors group"
-                  >
-                    <ExternalLink className={`h-3.5 w-3.5 ${tool.color} shrink-0`} />
-                    <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      {tool.name}
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </CardContent>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <CardHeader className="pb-3">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <ExternalLink className="h-4 w-4 text-primary" />
+          External SEO Tools
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-2 gap-2">
+          {tools.map((tool) => (
+            <a
+              key={tool.name}
+              href={tool.getUrl(url)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 p-2.5 rounded-lg bg-secondary/30 hover:bg-secondary/60 border border-border/30 hover:border-border transition-colors group"
+            >
+              <ExternalLink className={`h-3.5 w-3.5 ${tool.color} shrink-0`} />
+              <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                {tool.name}
+              </span>
+            </a>
+          ))}
+        </div>
+      </CardContent>
     </Card>
   );
 }
