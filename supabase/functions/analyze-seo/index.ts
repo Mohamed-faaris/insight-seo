@@ -122,15 +122,21 @@ serve(async (req) => {
     const ogUrl = getMeta("og:url");
     const ogSiteName = getMeta("og:site_name");
     const ogType = getMeta("og:type");
+    const ogLocale = getMeta("og:locale");
+    const ogImageWidth = getMeta("og:image:width");
+    const ogImageHeight = getMeta("og:image:height");
+    const ogImageAlt = getMeta("og:image:alt");
 
     const ogIssues: any[] = [];
     if (!ogTitle) ogIssues.push({ severity: "warning", category: "Open Graph", message: "Missing og:title" });
     if (!ogDescription) ogIssues.push({ severity: "warning", category: "Open Graph", message: "Missing og:description" });
     if (!ogImage) ogIssues.push({ severity: "warning", category: "Open Graph", message: "Missing og:image" });
     if (!ogUrl) ogIssues.push({ severity: "info", category: "Open Graph", message: "Missing og:url" });
+    if (ogImage && !ogImageWidth) ogIssues.push({ severity: "info", category: "Open Graph", message: "Missing og:image:width" });
+    if (ogImage && !ogImageHeight) ogIssues.push({ severity: "info", category: "Open Graph", message: "Missing og:image:height" });
     if (ogTitle && ogDescription && ogImage) ogIssues.push({ severity: "pass", category: "Open Graph", message: "Open Graph tags are properly configured" });
 
-    const openGraph = { title: ogTitle, description: ogDescription, image: ogImage, url: ogUrl, siteName: ogSiteName, type: ogType, issues: ogIssues };
+    const openGraph = { title: ogTitle, description: ogDescription, image: ogImage, imageWidth: ogImageWidth, imageHeight: ogImageHeight, imageAlt: ogImageAlt, url: ogUrl, siteName: ogSiteName, type: ogType, locale: ogLocale, issues: ogIssues };
 
     // --- Twitter Card ---
     const twCard = getMeta("twitter:card") || getMetaByAttr("name", "twitter:card");
