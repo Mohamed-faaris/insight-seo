@@ -16,7 +16,7 @@ import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
-import { Download, Share2, History, Search, Loader2 } from "lucide-react";
+import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
