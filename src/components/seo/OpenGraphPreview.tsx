@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface OpenGraphPreviewProps {
   og: OpenGraphData;
   twitter?: TwitterCardData;
+  siteUrl?: string;
 }
 
 export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
