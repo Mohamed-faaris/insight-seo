@@ -14,6 +14,7 @@ import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
+import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Search } from "lucide-react";
 
@@ -88,6 +89,7 @@ const SharedReport = () => {
           <LinkStats links={report.links} />
           <ImageAnalysisCard images={report.images} />
           <ContentCard content={report.content} />
+          <KeywordDensityCard content={report.content} />
           <TechnicalCard technical={report.technical} security={report.security} structuredData={report.structuredData} />
           <PerformanceCard performance={report.performance} />
           <ExternalToolsCard url={report.finalUrl} />
