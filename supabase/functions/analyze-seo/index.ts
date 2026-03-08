@@ -302,6 +302,37 @@ serve(async (req) => {
 
     const security = { isHttps, hasMixedContent, issues: secIssues };
 
+    // --- Favicon ---
+    const faviconEl = doc.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+    const appleTouchEl = doc.querySelector('link[rel="apple-touch-icon"]');
+    const faviconHref = faviconEl?.getAttribute("href") || "";
+    const faviconType = faviconEl?.getAttribute("type") || "";
+    const faviconSizes = faviconEl?.getAttribute("sizes") || "";
+    const appleTouchHref = appleTouchEl?.getAttribute("href") || "";
+
+    let faviconFound = !!faviconHref;
+    if (!faviconFound) {
+      try {
+        const favRes = await fetch(new URL("/favicon.ico", baseUrl).toString(), { method: "HEAD" });
+        faviconFound = favRes.ok;
+      } catch { /* skip */ }
+    }
+
+    const favIssues: any[] = [];
+    if (!faviconFound) favIssues.push({ severity: "warning", category: "Favicon", message: "No favicon found" });
+    else favIssues.push({ severity: "pass", category: "Favicon", message: "Favicon found" });
+    if (!appleTouchHref) favIssues.push({ severity: "info", category: "Favicon", message: "No Apple Touch Icon specified" });
+    else favIssues.push({ severity: "pass", category: "Favicon", message: "Apple Touch Icon found" });
+
+    const favicon = {
+      found: faviconFound,
+      url: faviconHref || (faviconFound ? "/favicon.ico" : ""),
+      type: faviconType,
+      sizes: faviconSizes,
+      appleTouchIcon: appleTouchHref,
+      issues: favIssues,
+    };
+
     // --- Performance (PageSpeed) ---
     let performance = null;
     const pageSpeedKey = Deno.env.get("GOOGLE_PAGESPEED_API_KEY");
