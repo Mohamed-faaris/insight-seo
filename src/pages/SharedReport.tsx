@@ -99,6 +99,7 @@ const SharedReport = () => {
           <KeywordDensityCard content={report.content} />
           <TechnicalCard technical={report.technical} security={report.security} structuredData={report.structuredData} />
           <PerformanceCard performance={report.performance} />
+          {report.manifest && <ManifestCard manifest={report.manifest} siteUrl={report.finalUrl} />}
           <ExternalToolsCard url={report.finalUrl} />
         </div>
       </div>
