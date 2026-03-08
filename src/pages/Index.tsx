@@ -181,6 +181,7 @@ const Index = () => {
               structuredData={report.structuredData}
             />
             <PerformanceCard performance={report.performance} />
+            {report.manifest && <ManifestCard manifest={report.manifest} siteUrl={report.finalUrl} />}
             <ExternalToolsCard url={report.finalUrl} />
           </div>
         </motion.div>
