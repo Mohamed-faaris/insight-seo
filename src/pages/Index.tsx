@@ -13,7 +13,6 @@ import { ImageAnalysisCard } from "@/components/seo/ImageAnalysisCard";
 import { ContentCard } from "@/components/seo/ContentCard";
 import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
-import { FaviconCard } from "@/components/seo/FaviconCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
@@ -159,9 +158,8 @@ const Index = () => {
 
           {/* Main Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            <PageInfoCard info={report.pageInfo} />
+            <PageInfoCard info={report.pageInfo} favicon={report.favicon} siteUrl={report.finalUrl} />
             <MetaSummary meta={report.metaTags} />
-            {report.favicon && <FaviconCard favicon={report.favicon} siteUrl={report.finalUrl} />}
             <OpenGraphPreview og={report.openGraph} twitter={report.twitterCard} />
             <HeadingChart headings={report.headings} />
             <LinkStats links={report.links} />
