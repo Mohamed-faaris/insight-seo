@@ -4,7 +4,6 @@ import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
 import { ScoreGauge } from "@/components/seo/ScoreGauge";
 import { MetaSummary } from "@/components/seo/MetaSummary";
 import { OpenGraphPreview } from "@/components/seo/OpenGraphPreview";
-import { TwitterCardPreview } from "@/components/seo/TwitterCardPreview";
 import { HeadingChart } from "@/components/seo/HeadingChart";
 import { LinkStats } from "@/components/seo/LinkStats";
 import { IssuesList } from "@/components/seo/IssuesList";
@@ -84,8 +83,7 @@ const SharedReport = () => {
           <PageInfoCard info={report.pageInfo} />
           <MetaSummary meta={report.metaTags} />
           {report.favicon && <FaviconCard favicon={report.favicon} siteUrl={report.finalUrl} />}
-          <OpenGraphPreview og={report.openGraph} />
-          <TwitterCardPreview twitter={report.twitterCard} />
+          <OpenGraphPreview og={report.openGraph} twitter={report.twitterCard} />
           <HeadingChart headings={report.headings} />
           <LinkStats links={report.links} />
           <ImageAnalysisCard images={report.images} />
