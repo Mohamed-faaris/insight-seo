@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
+import { useTheme } from "@/hooks/useTheme";
 import { UrlInput } from "@/components/seo/UrlInput";
 import { ScoreGauge } from "@/components/seo/ScoreGauge";
 import { MetaSummary } from "@/components/seo/MetaSummary";
@@ -16,9 +17,10 @@ import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { KeywordDensityCard } from "@/components/seo/KeywordDensityCard";
+import { ManifestCard } from "@/components/seo/ManifestCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
-import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
+import { Download, Share2, History, Search, Loader2, Swords, Sun, Moon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
