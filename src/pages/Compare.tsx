@@ -42,14 +42,11 @@ const Compare = () => {
     return data as SeoReport;
   };
 
-  const handleCompare = async (e: React.FormEvent) => {
-    e.preventDefault();
-    let u1 = url1.trim();
-    let u2 = url2.trim();
-    if (!u1 || !u2) return;
+  const handleCompareUrls = async (u1: string, u2: string) => {
     if (!u1.startsWith("http")) u1 = "https://" + u1;
     if (!u2.startsWith("http")) u2 = "https://" + u2;
 
+    setSearchParams({ url1: u1, url2: u2 }, { replace: true });
     setLoading(true);
     setError(null);
     setReport1(null);
@@ -66,10 +63,12 @@ const Compare = () => {
     }
   };
 
-  const CompareIndicator = ({ a, b, higherIsBetter = true }: { a: number; b: number; higherIsBetter?: boolean }) => {
-    if (a === b) return <Minus className="h-4 w-4 text-muted-foreground" />;
-    const aWins = higherIsBetter ? a > b : a < b;
-    return aWins ? <TrendingUp className="h-4 w-4 text-success" /> : <TrendingDown className="h-4 w-4 text-destructive" />;
+  const handleCompare = async (e: React.FormEvent) => {
+    e.preventDefault();
+    let u1 = url1.trim();
+    let u2 = url2.trim();
+    if (!u1 || !u2) return;
+    handleCompareUrls(u1, u2);
   };
 
   const MetricRow = ({ label, val1, val2, higherIsBetter = true, format }: {
