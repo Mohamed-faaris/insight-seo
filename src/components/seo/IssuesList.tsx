@@ -1,7 +1,9 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { SeoIssue } from "@/lib/seo-types";
-import { AlertTriangle, AlertCircle, Info, CheckCircle2, Shield } from "lucide-react";
+import { AlertTriangle, AlertCircle, Info, CheckCircle2, Shield, ClipboardCopy } from "lucide-react";
+import { toast } from "sonner";
 
 interface IssuesListProps {
   issues: SeoIssue[];
@@ -22,6 +24,21 @@ export function IssuesList({ issues }: IssuesListProps) {
 
   const sorted = [...critical, ...warnings, ...infos, ...passes];
 
+  const handleCopyAll = () => {
+    const problems = issues
+      .filter((i) => i.severity !== "pass")
+      .map((i) => `[${i.severity.toUpperCase()}] ${i.category}: ${i.message}`)
+      .join("\n");
+
+    if (!problems) {
+      toast.info("No problems to copy — all checks passed!");
+      return;
+    }
+
+    navigator.clipboard.writeText(problems);
+    toast.success("All problems copied to clipboard!");
+  };
+
   return (
     <Card className="glass-card">
       <CardHeader className="pb-3">
@@ -30,7 +47,7 @@ export function IssuesList({ issues }: IssuesListProps) {
             <Shield className="h-4 w-4 text-primary" />
             All Issues
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             {critical.length > 0 && (
               <Badge variant="destructive" className="text-xs">{critical.length} Critical</Badge>
             )}
@@ -38,6 +55,10 @@ export function IssuesList({ issues }: IssuesListProps) {
               <Badge className="bg-warning/20 text-warning border-warning/30 text-xs">{warnings.length} Warnings</Badge>
             )}
             <Badge className="bg-success/20 text-success border-success/30 text-xs">{passes.length} Passed</Badge>
+            <Button variant="outline" size="sm" className="h-7 text-xs" onClick={handleCopyAll}>
+              <ClipboardCopy className="h-3.5 w-3.5 mr-1.5" />
+              Copy Problems
+            </Button>
           </div>
         </CardTitle>
       </CardHeader>
