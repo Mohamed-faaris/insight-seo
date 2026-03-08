@@ -120,7 +120,7 @@ const Index = () => {
             >
               Get a comprehensive SEO audit with actionable insights. Analyze meta tags, headings, links, structured data, and more.
             </motion.p>
-            <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} />
+            <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} defaultUrl={searchParams.get("url") || ""} />
           </motion.section>
         )}
 
