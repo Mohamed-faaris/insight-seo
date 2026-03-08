@@ -143,7 +143,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-md mx-auto p-6 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
             <p className="text-destructive font-medium mb-4">{error}</p>
-            <UrlInput onAnalyze={analyze} isLoading={isAnalyzing} />
+            <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} />
           </div>
         </div>
       )}
