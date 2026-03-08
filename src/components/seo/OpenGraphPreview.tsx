@@ -176,3 +176,15 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
 function tryHostname(url: string) {
   try { return new URL(url).hostname; } catch { return url; }
 }
+
+function resolveAssetUrl(assetUrl?: string, baseUrl?: string) {
+  if (!assetUrl) return "";
+  if (/^(https?:|data:|blob:)/i.test(assetUrl)) return assetUrl;
+  if (!baseUrl) return assetUrl;
+
+  try {
+    return new URL(assetUrl, baseUrl).toString();
+  } catch {
+    return assetUrl;
+  }
+}
