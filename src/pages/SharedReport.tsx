@@ -13,6 +13,8 @@ import { ImageAnalysisCard } from "@/components/seo/ImageAnalysisCard";
 import { ContentCard } from "@/components/seo/ContentCard";
 import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
+import { FaviconCard } from "@/components/seo/FaviconCard";
+import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Search } from "lucide-react";
 
