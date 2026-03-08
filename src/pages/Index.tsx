@@ -168,6 +168,7 @@ const Index = () => {
             <LinkStats links={report.links} />
             <ImageAnalysisCard images={report.images} />
             <ContentCard content={report.content} />
+            <KeywordDensityCard content={report.content} />
             <TechnicalCard
               technical={report.technical}
               security={report.security}

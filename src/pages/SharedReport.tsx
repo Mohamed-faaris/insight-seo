@@ -89,6 +89,7 @@ const SharedReport = () => {
           <LinkStats links={report.links} />
           <ImageAnalysisCard images={report.images} />
           <ContentCard content={report.content} />
+          <KeywordDensityCard content={report.content} />
           <TechnicalCard technical={report.technical} security={report.security} structuredData={report.structuredData} />
           <PerformanceCard performance={report.performance} />
           <ExternalToolsCard url={report.finalUrl} />
