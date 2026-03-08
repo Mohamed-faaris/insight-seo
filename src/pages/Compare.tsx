@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Search, ArrowLeft, Loader2, Swords, Check, X, TrendingUp, TrendingDown, Minus,
   FileText, Link2, ImageIcon, Heading, Shield, Code2,
