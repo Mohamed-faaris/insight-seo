@@ -59,11 +59,15 @@ const SharedReport = () => {
               <span className="text-primary">SEO</span>Audit
             </h1>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            New Scan
-          </Button>
-        </div>
+          <div className="flex gap-1">
+            <Button variant="ghost" size="sm" onClick={() => navigate("/")}>
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              New Scan
+            </Button>
+            <Button variant="ghost" size="icon" className="h-9 w-9 text-muted-foreground hover:text-foreground" onClick={toggleTheme}>
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
+          </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
