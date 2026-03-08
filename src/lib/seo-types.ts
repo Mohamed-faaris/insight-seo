@@ -16,6 +16,7 @@ export interface SeoReport {
   security: SecurityAnalysis;
   performance: PerformanceData | null;
   favicon: FaviconData;
+  manifest: ManifestData | null;
   issues: SeoIssue[];
 }
 
