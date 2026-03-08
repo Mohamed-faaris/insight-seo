@@ -359,7 +359,7 @@ serve(async (req) => {
     const allIssues = [
       ...metaIssues, ...ogIssues, ...twIssues, ...headingIssues,
       ...imageIssues, ...linkIssues, ...sdIssues, ...contentIssues,
-      ...techIssues, ...secIssues,
+      ...techIssues, ...secIssues, ...favIssues,
     ];
 
     let score = 100;
