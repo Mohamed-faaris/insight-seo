@@ -6,11 +6,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface OpenGraphPreviewProps {
   og: OpenGraphData;
   twitter?: TwitterCardData;
+  siteUrl?: string;
 }
 
-export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
-  const hasOgData = og.title || og.description || og.image;
-  const hasTwitterData = twitter && (twitter.title || twitter.description || twitter.image);
+export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps) {
+  const resolvedOgImage = resolveAssetUrl(og.image, siteUrl || og.url);
+
+  // Derive preview data (Twitter falls back to OG)
+  const twTitle = twitter?.title || og.title;
+  const twDesc = twitter?.description || og.description;
+  const twImage = twitter?.image || og.image;
+  const resolvedTwImage = resolveAssetUrl(twImage, siteUrl || og.url);
+
+  const hasOgData = og.title || og.description || resolvedOgImage;
+  const hasTwitterData = twitter && (twitter.title || twitter.description || resolvedTwImage);
   const hasAnyData = hasOgData || hasTwitterData;
 
   const ogProperties = [
@@ -25,11 +34,6 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
     { key: "og:image:height", value: og.imageHeight },
     { key: "og:image:alt", value: og.imageAlt },
   ];
-
-  // Derive preview data (Twitter falls back to OG)
-  const twTitle = twitter?.title || og.title;
-  const twDesc = twitter?.description || og.description;
-  const twImage = twitter?.image || og.image;
 
   return (
     <Card className="glass-card xl:col-span-2">
@@ -53,9 +57,9 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
             {/* Facebook Preview */}
             <TabsContent value="facebook">
               <div className="rounded-lg border border-border overflow-hidden bg-secondary/30 max-w-md">
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={og.image} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
                 <div className="p-3 space-y-0.5 border-t border-border/50">
@@ -69,9 +73,9 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
             {/* Twitter/X Preview */}
             <TabsContent value="twitter">
               <div className="rounded-xl border border-border overflow-hidden bg-secondary/30 max-w-md">
-                {twImage && (
+                {resolvedTwImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={twImage} alt="Twitter" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedTwImage} alt="Twitter" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
                 <div className="p-3 space-y-0.5 border-t border-border/50">
@@ -101,9 +105,9 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
             {/* LinkedIn Preview */}
             <TabsContent value="linkedin">
               <div className="rounded-lg border border-border overflow-hidden bg-secondary/30 max-w-md">
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={og.image} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
                 <div className="p-3 space-y-1 border-t border-border/50">
@@ -121,9 +125,9 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
                   <p className="text-sm font-semibold text-foreground line-clamp-2">{og.title || "Untitled"}</p>
                   <p className="text-xs text-muted-foreground line-clamp-3 mt-0.5">{og.description || ""}</p>
                 </div>
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={og.image} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
               </div>
@@ -135,9 +139,9 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
                 {og.siteName && <p className="text-[10px] text-muted-foreground font-medium mb-1">{og.siteName}</p>}
                 <p className="text-sm font-semibold text-primary line-clamp-2">{og.title || "Untitled"}</p>
                 <p className="text-xs text-muted-foreground line-clamp-3 mt-1">{og.description || ""}</p>
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="mt-2 rounded overflow-hidden max-w-xs">
-                    <img src={og.image} alt="OG" className="w-full object-cover rounded" style={{ maxHeight: 200 }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full object-cover rounded" style={{ maxHeight: 200 }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
               </div>
@@ -171,4 +175,16 @@ export function OpenGraphPreview({ og, twitter }: OpenGraphPreviewProps) {
 
 function tryHostname(url: string) {
   try { return new URL(url).hostname; } catch { return url; }
+}
+
+function resolveAssetUrl(assetUrl?: string, baseUrl?: string) {
+  if (!assetUrl) return "";
+  if (/^(https?:|data:|blob:)/i.test(assetUrl)) return assetUrl;
+  if (!baseUrl) return assetUrl;
+
+  try {
+    return new URL(assetUrl, baseUrl).toString();
+  } catch {
+    return assetUrl;
+  }
 }
