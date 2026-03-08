@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
 import { useTheme } from "@/hooks/useTheme";
@@ -22,7 +22,7 @@ import { AccessibilityCard } from "@/components/seo/AccessibilityCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, History, Search, Loader2, Swords, Sun, Moon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const Index = () => {
