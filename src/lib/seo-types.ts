@@ -165,6 +165,19 @@ export interface FaviconData {
   issues: SeoIssue[];
 }
 
+export interface ManifestData {
+  found: boolean;
+  url: string;
+  name: string;
+  shortName: string;
+  startUrl: string;
+  display: string;
+  themeColor: string;
+  backgroundColor: string;
+  icons: { src: string; sizes: string; type: string }[];
+  issues: SeoIssue[];
+}
+
 export interface ScanRecord {
   id: string;
   url: string;
