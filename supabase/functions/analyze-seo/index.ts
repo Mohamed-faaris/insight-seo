@@ -122,15 +122,21 @@ serve(async (req) => {
     const ogUrl = getMeta("og:url");
     const ogSiteName = getMeta("og:site_name");
     const ogType = getMeta("og:type");
+    const ogLocale = getMeta("og:locale");
+    const ogImageWidth = getMeta("og:image:width");
+    const ogImageHeight = getMeta("og:image:height");
+    const ogImageAlt = getMeta("og:image:alt");
 
     const ogIssues: any[] = [];
     if (!ogTitle) ogIssues.push({ severity: "warning", category: "Open Graph", message: "Missing og:title" });
     if (!ogDescription) ogIssues.push({ severity: "warning", category: "Open Graph", message: "Missing og:description" });
     if (!ogImage) ogIssues.push({ severity: "warning", category: "Open Graph", message: "Missing og:image" });
     if (!ogUrl) ogIssues.push({ severity: "info", category: "Open Graph", message: "Missing og:url" });
+    if (ogImage && !ogImageWidth) ogIssues.push({ severity: "info", category: "Open Graph", message: "Missing og:image:width" });
+    if (ogImage && !ogImageHeight) ogIssues.push({ severity: "info", category: "Open Graph", message: "Missing og:image:height" });
     if (ogTitle && ogDescription && ogImage) ogIssues.push({ severity: "pass", category: "Open Graph", message: "Open Graph tags are properly configured" });
 
-    const openGraph = { title: ogTitle, description: ogDescription, image: ogImage, url: ogUrl, siteName: ogSiteName, type: ogType, issues: ogIssues };
+    const openGraph = { title: ogTitle, description: ogDescription, image: ogImage, imageWidth: ogImageWidth, imageHeight: ogImageHeight, imageAlt: ogImageAlt, url: ogUrl, siteName: ogSiteName, type: ogType, locale: ogLocale, issues: ogIssues };
 
     // --- Twitter Card ---
     const twCard = getMeta("twitter:card") || getMetaByAttr("name", "twitter:card");
@@ -296,6 +302,37 @@ serve(async (req) => {
 
     const security = { isHttps, hasMixedContent, issues: secIssues };
 
+    // --- Favicon ---
+    const faviconEl = doc.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+    const appleTouchEl = doc.querySelector('link[rel="apple-touch-icon"]');
+    const faviconHref = faviconEl?.getAttribute("href") || "";
+    const faviconType = faviconEl?.getAttribute("type") || "";
+    const faviconSizes = faviconEl?.getAttribute("sizes") || "";
+    const appleTouchHref = appleTouchEl?.getAttribute("href") || "";
+
+    let faviconFound = !!faviconHref;
+    if (!faviconFound) {
+      try {
+        const favRes = await fetch(new URL("/favicon.ico", baseUrl).toString(), { method: "HEAD" });
+        faviconFound = favRes.ok;
+      } catch { /* skip */ }
+    }
+
+    const favIssues: any[] = [];
+    if (!faviconFound) favIssues.push({ severity: "warning", category: "Favicon", message: "No favicon found" });
+    else favIssues.push({ severity: "pass", category: "Favicon", message: "Favicon found" });
+    if (!appleTouchHref) favIssues.push({ severity: "info", category: "Favicon", message: "No Apple Touch Icon specified" });
+    else favIssues.push({ severity: "pass", category: "Favicon", message: "Apple Touch Icon found" });
+
+    const favicon = {
+      found: faviconFound,
+      url: faviconHref || (faviconFound ? "/favicon.ico" : ""),
+      type: faviconType,
+      sizes: faviconSizes,
+      appleTouchIcon: appleTouchHref,
+      issues: favIssues,
+    };
+
     // --- Performance (PageSpeed) ---
     let performance = null;
     const pageSpeedKey = Deno.env.get("GOOGLE_PAGESPEED_API_KEY");
@@ -322,7 +359,7 @@ serve(async (req) => {
     const allIssues = [
       ...metaIssues, ...ogIssues, ...twIssues, ...headingIssues,
       ...imageIssues, ...linkIssues, ...sdIssues, ...contentIssues,
-      ...techIssues, ...secIssues,
+      ...techIssues, ...secIssues, ...favIssues,
     ];
 
     let score = 100;
@@ -349,6 +386,7 @@ serve(async (req) => {
       technical,
       security,
       performance,
+      favicon,
       issues: allIssues,
     };
 

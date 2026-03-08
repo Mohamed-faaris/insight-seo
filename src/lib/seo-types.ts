@@ -15,6 +15,7 @@ export interface SeoReport {
   technical: TechnicalSeo;
   security: SecurityAnalysis;
   performance: PerformanceData | null;
+  favicon: FaviconData;
   issues: SeoIssue[];
 }
 
@@ -43,9 +44,13 @@ export interface OpenGraphData {
   title: string;
   description: string;
   image: string;
+  imageWidth: string;
+  imageHeight: string;
+  imageAlt: string;
   url: string;
   siteName: string;
   type: string;
+  locale: string;
   issues: SeoIssue[];
 }
 
@@ -148,6 +153,15 @@ export interface SeoIssue {
   category: string;
   message: string;
   details?: string;
+}
+
+export interface FaviconData {
+  found: boolean;
+  url: string;
+  type: string;
+  sizes: string;
+  appleTouchIcon: string;
+  issues: SeoIssue[];
 }
 
 export interface ScanRecord {

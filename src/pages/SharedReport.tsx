@@ -13,6 +13,8 @@ import { ImageAnalysisCard } from "@/components/seo/ImageAnalysisCard";
 import { ContentCard } from "@/components/seo/ContentCard";
 import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
+import { FaviconCard } from "@/components/seo/FaviconCard";
+import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Search } from "lucide-react";
 
@@ -81,14 +83,16 @@ const SharedReport = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           <PageInfoCard info={report.pageInfo} />
           <MetaSummary meta={report.metaTags} />
-          <HeadingChart headings={report.headings} />
+          <FaviconCard favicon={report.favicon} siteUrl={report.finalUrl} />
           <OpenGraphPreview og={report.openGraph} />
           <TwitterCardPreview twitter={report.twitterCard} />
+          <HeadingChart headings={report.headings} />
           <LinkStats links={report.links} />
           <ImageAnalysisCard images={report.images} />
           <ContentCard content={report.content} />
           <TechnicalCard technical={report.technical} security={report.security} structuredData={report.structuredData} />
           <PerformanceCard performance={report.performance} />
+          <ExternalToolsCard url={report.finalUrl} />
         </div>
       </div>
     </div>
