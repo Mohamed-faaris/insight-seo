@@ -57,9 +57,9 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
             {/* Facebook Preview */}
             <TabsContent value="facebook">
               <div className="rounded-lg border border-border overflow-hidden bg-secondary/30 max-w-md">
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={og.image} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
                 <div className="p-3 space-y-0.5 border-t border-border/50">
@@ -73,9 +73,9 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
             {/* Twitter/X Preview */}
             <TabsContent value="twitter">
               <div className="rounded-xl border border-border overflow-hidden bg-secondary/30 max-w-md">
-                {twImage && (
+                {resolvedTwImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={twImage} alt="Twitter" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedTwImage} alt="Twitter" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
                 <div className="p-3 space-y-0.5 border-t border-border/50">
@@ -105,9 +105,9 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
             {/* LinkedIn Preview */}
             <TabsContent value="linkedin">
               <div className="rounded-lg border border-border overflow-hidden bg-secondary/30 max-w-md">
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={og.image} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
                 <div className="p-3 space-y-1 border-t border-border/50">
@@ -125,9 +125,9 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
                   <p className="text-sm font-semibold text-foreground line-clamp-2">{og.title || "Untitled"}</p>
                   <p className="text-xs text-muted-foreground line-clamp-3 mt-0.5">{og.description || ""}</p>
                 </div>
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="aspect-[1.91/1] bg-muted overflow-hidden">
-                    <img src={og.image} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
               </div>
@@ -139,9 +139,9 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
                 {og.siteName && <p className="text-[10px] text-muted-foreground font-medium mb-1">{og.siteName}</p>}
                 <p className="text-sm font-semibold text-primary line-clamp-2">{og.title || "Untitled"}</p>
                 <p className="text-xs text-muted-foreground line-clamp-3 mt-1">{og.description || ""}</p>
-                {og.image && (
+                {resolvedOgImage && (
                   <div className="mt-2 rounded overflow-hidden max-w-xs">
-                    <img src={og.image} alt="OG" className="w-full object-cover rounded" style={{ maxHeight: 200 }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    <img src={resolvedOgImage} alt="OG" className="w-full object-cover rounded" style={{ maxHeight: 200 }} onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                   </div>
                 )}
               </div>
