@@ -9,9 +9,9 @@ interface LinkStatsProps {
 
 export function LinkStats({ links }: LinkStatsProps) {
   const data = [
-    { name: "Internal", value: links.internal, color: "hsl(199, 89%, 48%)" },
-    { name: "External", value: links.external, color: "hsl(262, 83%, 58%)" },
-    { name: "Nofollow", value: links.nofollow, color: "hsl(38, 92%, 50%)" },
+    { name: "Internal", value: links.internal, color: "hsl(var(--chart-1))" },
+    { name: "External", value: links.external, color: "hsl(var(--chart-5))" },
+    { name: "Nofollow", value: links.nofollow, color: "hsl(var(--chart-3))" },
   ].filter((d) => d.value > 0);
 
   return (

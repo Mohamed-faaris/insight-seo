@@ -8,12 +8,12 @@ interface HeadingChartProps {
 }
 
 const COLORS = [
-  "hsl(199, 89%, 48%)",
-  "hsl(152, 69%, 41%)",
-  "hsl(38, 92%, 50%)",
-  "hsl(0, 72%, 51%)",
-  "hsl(262, 83%, 58%)",
-  "hsl(215, 20%, 55%)",
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+  "hsl(var(--muted-foreground))",
 ];
 
 export function HeadingChart({ headings }: HeadingChartProps) {

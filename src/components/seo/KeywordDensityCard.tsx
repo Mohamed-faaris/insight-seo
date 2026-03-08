@@ -25,11 +25,11 @@ interface KeywordDensityCardProps {
 }
 
 const CHART_COLORS = [
-  "hsl(var(--primary))",
-  "hsl(24, 95%, 53%)",
-  "hsl(0, 72%, 51%)",
-  "hsl(210, 100%, 56%)",
-  "hsl(142, 71%, 45%)",
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-5))",
 ];
 
 export function KeywordDensityCard({ content }: KeywordDensityCardProps) {

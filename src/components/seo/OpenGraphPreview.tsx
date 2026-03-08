@@ -119,7 +119,7 @@ export function OpenGraphPreview({ og, twitter, siteUrl }: OpenGraphPreviewProps
 
             {/* WhatsApp Preview */}
             <TabsContent value="whatsapp">
-              <div className="rounded-lg overflow-hidden max-w-md bg-[hsl(142_70%_22%/0.15)] border border-[hsl(142_70%_30%/0.3)] p-0">
+              <div className="rounded-lg overflow-hidden max-w-md bg-success/10 border border-success/20 p-0">
                 <div className="p-3 pb-2">
                   <p className="text-[10px] text-success font-medium mb-1 truncate">{og.url ? tryHostname(og.url) : ""}</p>
                   <p className="text-sm font-semibold text-foreground line-clamp-2">{og.title || "Untitled"}</p>
