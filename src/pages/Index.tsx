@@ -29,6 +29,27 @@ const Index = () => {
   const { isAnalyzing, report, shareToken, error, analyze } = useSeoAnalysis();
   const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Auto-analyze from ?url= query param
+  useEffect(() => {
+    const urlParam = searchParams.get("url");
+    if (urlParam && !report && !isAnalyzing) {
+      analyze(urlParam);
+    }
+  }, []);
+
+  // Sync URL to query params after analysis
+  useEffect(() => {
+    if (report?.url) {
+      setSearchParams({ url: report.url }, { replace: true });
+    }
+  }, [report]);
+
+  const handleAnalyze = (url: string) => {
+    setSearchParams({ url }, { replace: true });
+    analyze(url);
+  };
 
   const handleShare = () => {
     if (!shareToken) return;
