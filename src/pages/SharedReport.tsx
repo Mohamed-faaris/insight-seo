@@ -23,6 +23,7 @@ import { ArrowLeft, Loader2, Search, Sun, Moon } from "lucide-react";
 const SharedReport = () => {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
+  const { theme, toggle: toggleTheme } = useTheme();
   const { report, error, loadFromShareToken } = useSeoAnalysis();
 
   useEffect(() => {
