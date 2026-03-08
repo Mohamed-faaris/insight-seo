@@ -16,12 +16,22 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, Legend
 
 const Compare = () => {
   const navigate = useNavigate();
-  const [url1, setUrl1] = useState("");
-  const [url2, setUrl2] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [url1, setUrl1] = useState(searchParams.get("url1") || "");
+  const [url2, setUrl2] = useState(searchParams.get("url2") || "");
   const [report1, setReport1] = useState<SeoReport | null>(null);
   const [report2, setReport2] = useState<SeoReport | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Auto-compare from query params
+  useEffect(() => {
+    const u1 = searchParams.get("url1");
+    const u2 = searchParams.get("url2");
+    if (u1 && u2 && !report1 && !report2 && !loading) {
+      handleCompareUrls(u1, u2);
+    }
+  }, []);
 
   const analyzeUrl = async (url: string): Promise<SeoReport> => {
     const { data, error } = await supabase.functions.invoke("analyze-seo", {
