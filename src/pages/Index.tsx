@@ -26,6 +26,7 @@ import { toast } from "sonner";
 
 const Index = () => {
   const { isAnalyzing, report, shareToken, error, analyze } = useSeoAnalysis();
+  const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleShare = () => {
