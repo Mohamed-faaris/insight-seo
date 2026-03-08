@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import type { SeoReport } from "@/lib/seo-types";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Search, ArrowLeft, Loader2, Swords, Check, X, TrendingUp, TrendingDown, Minus,
   FileText, Link2, ImageIcon, Heading, Shield, Code2,
@@ -16,12 +16,22 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, Legend
 
 const Compare = () => {
   const navigate = useNavigate();
-  const [url1, setUrl1] = useState("");
-  const [url2, setUrl2] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [url1, setUrl1] = useState(searchParams.get("url1") || "");
+  const [url2, setUrl2] = useState(searchParams.get("url2") || "");
   const [report1, setReport1] = useState<SeoReport | null>(null);
   const [report2, setReport2] = useState<SeoReport | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Auto-compare from query params
+  useEffect(() => {
+    const u1 = searchParams.get("url1");
+    const u2 = searchParams.get("url2");
+    if (u1 && u2 && !report1 && !report2 && !loading) {
+      handleCompareUrls(u1, u2);
+    }
+  }, []);
 
   const analyzeUrl = async (url: string): Promise<SeoReport> => {
     const { data, error } = await supabase.functions.invoke("analyze-seo", {
@@ -32,14 +42,11 @@ const Compare = () => {
     return data as SeoReport;
   };
 
-  const handleCompare = async (e: React.FormEvent) => {
-    e.preventDefault();
-    let u1 = url1.trim();
-    let u2 = url2.trim();
-    if (!u1 || !u2) return;
+  const handleCompareUrls = async (u1: string, u2: string) => {
     if (!u1.startsWith("http")) u1 = "https://" + u1;
     if (!u2.startsWith("http")) u2 = "https://" + u2;
 
+    setSearchParams({ url1: u1, url2: u2 }, { replace: true });
     setLoading(true);
     setError(null);
     setReport1(null);
@@ -56,10 +63,12 @@ const Compare = () => {
     }
   };
 
-  const CompareIndicator = ({ a, b, higherIsBetter = true }: { a: number; b: number; higherIsBetter?: boolean }) => {
-    if (a === b) return <Minus className="h-4 w-4 text-muted-foreground" />;
-    const aWins = higherIsBetter ? a > b : a < b;
-    return aWins ? <TrendingUp className="h-4 w-4 text-success" /> : <TrendingDown className="h-4 w-4 text-destructive" />;
+  const handleCompare = async (e: React.FormEvent) => {
+    e.preventDefault();
+    let u1 = url1.trim();
+    let u2 = url2.trim();
+    if (!u1 || !u2) return;
+    handleCompareUrls(u1, u2);
   };
 
   const MetricRow = ({ label, val1, val2, higherIsBetter = true, format }: {

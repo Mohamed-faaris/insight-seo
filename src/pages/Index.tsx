@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSeoAnalysis } from "@/hooks/useSeoAnalysis";
 import { useTheme } from "@/hooks/useTheme";
@@ -22,13 +22,34 @@ import { AccessibilityCard } from "@/components/seo/AccessibilityCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, History, Search, Loader2, Swords, Sun, Moon } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const Index = () => {
   const { isAnalyzing, report, shareToken, error, analyze } = useSeoAnalysis();
   const { theme, toggle: toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Auto-analyze from ?url= query param
+  useEffect(() => {
+    const urlParam = searchParams.get("url");
+    if (urlParam && !report && !isAnalyzing) {
+      analyze(urlParam);
+    }
+  }, []);
+
+  // Sync URL to query params after analysis
+  useEffect(() => {
+    if (report?.url) {
+      setSearchParams({ url: report.url }, { replace: true });
+    }
+  }, [report]);
+
+  const handleAnalyze = (url: string) => {
+    setSearchParams({ url }, { replace: true });
+    analyze(url);
+  };
 
   const handleShare = () => {
     if (!shareToken) return;
@@ -99,7 +120,7 @@ const Index = () => {
             >
               Get a comprehensive SEO audit with actionable insights. Analyze meta tags, headings, links, structured data, and more.
             </motion.p>
-            <UrlInput onAnalyze={analyze} isLoading={isAnalyzing} />
+            <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} defaultUrl={searchParams.get("url") || ""} />
           </motion.section>
         )}
 
@@ -122,7 +143,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-md mx-auto p-6 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
             <p className="text-destructive font-medium mb-4">{error}</p>
-            <UrlInput onAnalyze={analyze} isLoading={isAnalyzing} />
+            <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} defaultUrl={searchParams.get("url") || ""} />
           </div>
         </div>
       )}
@@ -138,7 +159,7 @@ const Index = () => {
           {/* Report Header */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
             <div className="flex-1 min-w-0">
-              <UrlInput onAnalyze={analyze} isLoading={isAnalyzing} />
+              <UrlInput onAnalyze={handleAnalyze} isLoading={isAnalyzing} defaultUrl={searchParams.get("url") || ""} />
               <p className="text-xs text-muted-foreground mt-2">
                 Final URL: {report.finalUrl} · Scanned {new Date(report.scanDate).toLocaleString()}
               </p>
