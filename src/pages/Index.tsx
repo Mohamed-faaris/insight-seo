@@ -14,6 +14,7 @@ import { ContentCard } from "@/components/seo/ContentCard";
 import { TechnicalCard } from "@/components/seo/TechnicalCard";
 import { PerformanceCard } from "@/components/seo/PerformanceCard";
 import { ExternalToolsCard } from "@/components/seo/ExternalToolsCard";
+import { GooglePreviewCard } from "@/components/seo/GooglePreviewCard";
 import { exportReportAsPdf } from "@/lib/pdf-export";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, History, Search, Loader2, Swords } from "lucide-react";
@@ -160,6 +161,7 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <PageInfoCard info={report.pageInfo} favicon={report.favicon} siteUrl={report.finalUrl} />
             <MetaSummary meta={report.metaTags} />
+            <GooglePreviewCard url={report.finalUrl} title={report.metaTags.title} description={report.metaTags.description} />
             <OpenGraphPreview og={report.openGraph} twitter={report.twitterCard} />
             <HeadingChart headings={report.headings} />
             <LinkStats links={report.links} />
