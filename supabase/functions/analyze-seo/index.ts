@@ -413,10 +413,11 @@ serve(async (req) => {
     }
 
     // --- Calculate SEO Score ---
+    const manifestIssuesForScore = manifest?.issues || [];
     const allIssues = [
       ...metaIssues, ...ogIssues, ...twIssues, ...headingIssues,
       ...imageIssues, ...linkIssues, ...sdIssues, ...contentIssues,
-      ...techIssues, ...secIssues, ...favIssues,
+      ...techIssues, ...secIssues, ...favIssues, ...manifestIssuesForScore,
     ];
 
     let score = 100;
@@ -444,6 +445,7 @@ serve(async (req) => {
       security,
       performance,
       favicon,
+      manifest,
       issues: allIssues,
     };
 
