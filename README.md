@@ -1,16 +1,10 @@
----
-og:image: ./opengraph.png
----
-
 # SEOAudit
 
-Free website SEO analysis tool built with Next.js and Lovable that provides comprehensive SEO audits with actionable insights.
+Free website SEO analysis tool built with Next.js that provides comprehensive SEO audits with actionable insights.
 
 ## Live Demo
 
 🔗 [insight-seo.vercel.app](https://insight-seo.vercel.app/)
-
-![SEOAudit](opengraph.png)
 
 ## Features
 
