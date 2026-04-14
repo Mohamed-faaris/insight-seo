@@ -1,3 +1,7 @@
+---
+og:image: ./opengraph.png
+---
+
 # SEOAudit
 
 Free website SEO analysis tool built with Next.js and Lovable that provides comprehensive SEO audits with actionable insights.
